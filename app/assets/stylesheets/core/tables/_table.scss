@@ -5,6 +5,15 @@
 
 // General styles
 
+.hide {
+    display: none;
+  }
+      
+  .myDIV:hover + .hide {
+    display: block;
+    color: red;
+  }
+  
 .table {
     thead th {
         padding-top: $table-head-spacer-y;

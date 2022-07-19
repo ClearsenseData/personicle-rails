@@ -1,0 +1,112 @@
+<%# JQuery %>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+<%# Data Table - User Events %>
+  <%= form_with url: delete_user_events_path, local: true, method: :post do |form| %> 
+  <div class="card">
+  <div class="card-header border-0">
+    <div class="row align-items-center">
+      <div class="col">
+        <h3 class="mb-0">User Events</h3>
+      </div>
+      <div class="col text-right">
+        <button type="submit" class="btn btn-sm btn-primary">Delete Selected</button>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <!-- Data Table -->
+   
+    <table id="delete-table" class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th><input type="checkbox" class="form-check-input"  name="select-all" value="select-all_value" onClick="toggle(this)"/><br/></th>
+          <th scope="col">Event ID</th>
+          <th scope="col">Start Time</th>
+          <th scope="col">End Time</th>
+          <th scope="col">Source</th>
+          <th scope="col">Event Name</th>
+          <th scope="col">List of Parameters</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody>
+    
+    
+     <% if !@response.empty? %>
+        <div class="accordion mt-2" id="accordionExample">
+            <% @response.each do |record|%> 
+        <tr id="<%=record['unique_event_id']%>" class="tableRow">
+          <th scope="row">
+            <input id="<%=record['unique_event_id']%>" value="<%=record['unique_event_id']%>" type="checkbox" class="form-check-input"  name="selected_events[]" value="select-all" onClick="handleSelect(this)"/>
+          </th>
+          <td scope="row" class="context-menu" data-container-id="context-menu-items">
+          <%=record['unique_event_id']%>
+          </td>
+          <td id="second">
+            <%=record['start_time']%>
+          </td>
+          <td>
+            <div class="d-flex align-items-center">
+              <span class="mr-2"><%=user_data_table[0]['end_time']%></span>
+              <div>
+                <div class="progress">
+                  <div class="progress-bar bg-gradient-danger" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
+                </div>
+              </div>
+            </div>
+          </td>
+          <td scope="row" class="context-menu" data-container-id="context-menu-items">
+          <%=record['source']%>
+          </td>
+          <td scope="row" class="context-menu" data-container-id="context-menu-items">
+          <%=record['event_name']%>
+          </td>
+          <td scope="row" class="context-menu tooltiptext" data-container-id="context-menu-items">
+            <p id='some_text_id' >Click to show list of Parameters</p>
+          </td>
+        </tr>
+        <% end %> 
+      <% end %>
+      </tbody>
+      
+    </table>
+    <%# <%= form.submit "Search" %> 
+<% end %>
+  </div>
+</div>
+
+<script language="JavaScript">
+
+// Select All CheckBoxes
+function toggle(source) {
+  checkboxes = document.getElementsByName('select-all');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+
+//  Delete Row 
+$("#delete-button").on("click", function(e) {
+  $("#delete-table tr:has(td > input[type=checkbox]:checked)").remove();
+});
+
+// Prevent Page Refresh When Deleting Element from Table
+$("#submit").click(function () {
+   event.preventDefault();
+});
+
+// Handle Select
+function handleSelect(source) {
+  console.log($(source).attr('id'))
+  if(document.getElementById($(source).attr('id')).checked) {
+      console.log("Adding event id" + $(source).attr('id'))
+      eventIDs.push($(source).attr('id').replace("row-check-",""))
+   } else {
+      console.log("Removing event id" + $(source).attr('id'))
+      eventIDs = eventIDs.filter(function(value, index, arr){return value != $(source).attr('id').replace("row-check-","")
+;});
+   }
+
+}
+</script>

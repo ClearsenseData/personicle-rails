@@ -79,8 +79,8 @@ function TimelineChart ({user_data}) {
   
       // Set chart options
       var options = {'title':'Gantt Chart Timeline Visualization',
-                    'width':'100%',
-                    'height': '100%',
+                    width:'100%',
+                    height: '1000px',
                     hAxis: {
                       textStyle:{color: '#FFF'}
                   },
@@ -102,8 +102,8 @@ function TimelineChart ({user_data}) {
 
       // Create a timeline chart, passing some options
       var timelineOptions = {
-        width: 650,
-        height: 500, //window.innerHeight,        
+        width: '100%',
+        height: '1000px'  
     };
 
       var timelineChart = new google.visualization.ChartWrapper({
@@ -125,8 +125,8 @@ function TimelineChart ({user_data}) {
       function resize () {
         const chart = new google.visualization.Timeline(document.getElementById('timeline'));
 
-        timelineOptions.width = .4 * window.innerWidth;
-        timelineOptions.height = .5 * window.innerHeight;
+        timelineOptions.width = 1.0 * window.innerWidth;
+        timelineOptions.height = 1.0 * window.innerHeight;
   
         dashboard.draw(data, options);
       }

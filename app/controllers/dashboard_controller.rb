@@ -30,6 +30,11 @@ class DashboardController < ApplicationController
       # last_month_total_sleep, last_month_sleep_events
       # last_week_total_sleep, last_week_sleep_events
       
+    respond_to do |format|
+      format.html
+      format.json { render json: UserEventsDatatable.new(params) }
+    end
+
       @sleep_events = @response.select {|event| event['event_name'] == 'Sleep'}
       # duration is in milliseconds in the data packet
       @last_month_total_sleep = @sleep_events.select {|event| event['start_time'].to_datetime > 30.days.ago}.sum {|event| event['parameters']['duration']}/(60*1000)
@@ -42,6 +47,7 @@ class DashboardController < ApplicationController
       # puts @response
       # puts @last_week_sleep_event
     end
+ 
 
     if !@response_step.empty?
     
@@ -59,11 +65,29 @@ class DashboardController < ApplicationController
     end
 
     if !@response_weight.empty?
+      #puts @response_weight
+      # puts 'Weight Response'
       tmp_weight = @response_weight.group_by_day{|rec| rec['timestamp'].to_datetime}.to_h
       @daily_weight = tmp_weight.map {|k,v| [k, v.sum {|r| r['value']}]}.to_h
+      # puts 'Daily Weight'
+      # puts @daily_weight
     end
-    
+
+    # puts @response
   end
-  
+
+  def delete_event
+    # url = "https://api.personicle.org/data/write/event/delete"?user_id=userid&event_id=some_event_id;another_event_id
+    # RestClient::Request.execute(:url => url, headers: {Authorization: "Bearer #{session[:oktastate]['credentials']['token']} "}, :method => :delete, ),object_class: OpenStruct)
+    # params[:select-all] = select-all_value
+    events = params[:selected_events]
+
+    if !events.nil?
+      events = events.join(";")
+      url = "https://api.personicle.org/data/write/event/delete?user_id=#{session[:oktastate]['uid']}&event_id=#{events}"
+      res =  JSON.parse(RestClient::Request.execute(:url => url, headers: {Authorization: "Bearer #{session[:oktastate]['credentials']['token']} "}, :method => :delete,:verify_ssl => false ),object_class: OpenStruct)
+      redirect_to pages_dashboard_path, refresh:"hard_refresh"
+    end
+  end
 
 end

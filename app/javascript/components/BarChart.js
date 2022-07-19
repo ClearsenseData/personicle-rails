@@ -66,7 +66,9 @@ function BarChart ({userSummary}) {
         var options = {
         title: 'Total Time Spent Doing Activity',
         legend: 'none',
-        chartArea: {width: '75%'},
+        width: '100%',
+        height: '100%',
+        chartArea: {width: '100%'},
         hAxis: {title: 'Total Duration'},
         vAxis: {title: 'Event'},
         legend: {position: 'none'}
@@ -83,8 +85,8 @@ function BarChart ({userSummary}) {
 
       // Create a Bar chart, passing some options
       var barChartOptions = {
-        width: 410,
-        height: 200,
+        width: '100%',
+        height: '40%',
         legend: 'none'
     };
 
@@ -104,7 +106,7 @@ function BarChart ({userSummary}) {
       // console.log("called barchart resize");
       const chart = new google.visualization.BarChart(document.getElementById('chart_div'));
 
-      barChartOptions.width = .7 * window.innerWidth;
+      barChartOptions.width = 1.0 * window.innerWidth;
       //barChartOptions.height = .4 * window.innerHeight;
       dashboard.draw(data, options);
     }

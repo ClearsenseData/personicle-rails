@@ -21,6 +21,8 @@ gem 'react-rails'
 gem 'jquery-turbolinks'
 gem 'will_paginate', '~> 3.3'
 gem 'bootstrap-will_paginate', '1.0.0'
+gem 'ajax-datatables-rails'
+gem 'jquery-datatables'
 
 # Use Puma as the app server
 gem 'puma', '~> 4.1'

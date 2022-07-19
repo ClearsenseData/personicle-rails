@@ -129,8 +129,8 @@ function ProgressionChart ({user_data}) {
         // Set chart options
         var options = {
             title: 'Total Time Spent Doing Various Activities Per Week',
-            width: 5000,
-            height: 200,
+            width: '100%',
+            height: '50%',
             vAxis: {title: 'Total Duration'},
             hAxis: 
                 {title: 'Event',
@@ -161,8 +161,8 @@ function ProgressionChart ({user_data}) {
       // Create a Bar chart, passing some options
       var comboChartOptions = {
         // title: '',
-        width: 770,
-        height: 205,
+        width: '100%',
+        height: '50%',
         vAxis: {title: 'Total Duration'},
         hAxis: 
             {title: 'Event',
@@ -208,9 +208,9 @@ function ProgressionChart ({user_data}) {
         //   console.log("called resize");
         //   const chart = new google.visualization.ComboChart(document.getElementById('combo_chart_div'));
     
-          comboChartOptions.width = 0.5 * window.innerWidth;
-          comboChartOptions.height = .4 * window.innerHeight;
-        //   columnFilter.draw(data, options);
+        comboChartOptions.width = 1.0 * window.innerWidth;
+        comboChartOptions.height = 0.5 * window.innerHeight;
+        columnFilter.draw(data, options);
         setChartView();
         }
     

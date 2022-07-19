@@ -1,3 +1,11 @@
+<style>
+</style>
+
+<%# Import the jQuery JavaScript library and the jQuery 3Dot Context Menu plugin’s information into the online web page. %>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js">
+</script>
+<script src="context-menu.js"></script>
+<link href="context-menu.css" rel="stylesheet">
 
 <div class="header bg-primary pb-6">
   <div class="container-fluid">
@@ -44,5 +52,20 @@
     </div>
   </div>
 
+<%# Data Table - User Events %>
+       <%# <% if user_data.length() != 0  %>
+        <%# @response.each { |v| puts ""} %>
+    <div class="row">
+    <div class="col" background-color="white">
+     <% @data_table = !@response.nil? ? @response: []
+      %>
+        <%= render 'pages/dashboard/tables/data_table', user_data_table:@data_table %>
+    </div>
+  </div> 
+
+<%# Footer %>
   <%= render 'pages/footer' %>
-</div>
+
+<script>
+
+</script>
